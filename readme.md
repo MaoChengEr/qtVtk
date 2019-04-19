@@ -1,5 +1,7 @@
 * content
 {:toc}
+
+
 ### 1.QT,VTK,MinGW,CMake简介
 
 qt：<https://qt-project.org/>，Qt是1991年奇趣科技开发的一个跨平台的C++图形用户界面应用程序框架。它提供给应用程序开发者建立艺术级的图形用户界面所需的所有功能。Qt很容易扩展，并且允许真正地组件编程。基本上，Qt 同X Window上的Motif，Openwin，GTK 等图形界面库和Windows 平台上的MFC，OWL，VCL，ATL是同类型的东西。
@@ -144,4 +146,8 @@ cmake：<https://cmake.org/>，cmake是一种跨平台编译工具，比make更�
 
 效果如下：
 
-​	
+![1555656889514](https://raw.githubusercontent.com/MaoChengEr/qtVtk/master/pic/1555656889514.png)
+
+![1555657003264](https://raw.githubusercontent.com/MaoChengEr/qtVtk/master/pic/1555657003264.png)
+
+![1555657003264](https://raw.githubusercontent.com/MaoChengEr/qtVtk/master/pic/1555657063859.png)
