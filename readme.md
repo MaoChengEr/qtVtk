@@ -140,10 +140,8 @@ cmake：<https://cmake.org/>，cmake是一种跨平台编译工具，比make更�
 
 ![1553738475811](https://raw.githubusercontent.com/MaoChengEr/maochenger.github.io/master/imgs/1553738475811.png)
 
-7.
+### 5.嵌入qt中的vtk能够生成20000个随机点，点的颜色随机。
 
+效果如下：
 
-
-
-
-
+​	
