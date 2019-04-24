@@ -1,0 +1,210 @@
+//    double x, y, z,low_z = DBL_MAX,high_z = DBL_MIN;
+//    vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+//        for(int i=0;i <200000;i++)
+//        {
+//            x = vtkMath::Random(0.0,5.0);
+//            y = vtkMath::Random(0.0,5.0);
+//            z = vtkMath::Random(0.0,5.0);
+//            double point[3] = {x,y,z};
+//            points->InsertNextPoint(point);
+//        }
+
+//        vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
+//        polydata->SetPoints(points);
+////        polydata->SetPoints();
+
+//        vtkSmartPointer<vtkVertexGlyphFilter> glyphFilter = vtkSmartPointer<vtkVertexGlyphFilter>::New();
+//        glyphFilter->SetInputData(polydata);
+//        glyphFilter->Update();
+
+//        vtkElevationFilter *elevationFilter = vtkElevationFilter::New();
+//        elevationFilter->SetInputConnection(glyphFilter->GetOutputPort());
+//        elevationFilter->SetLowPoint(0, 0, low_z);
+//        elevationFilter->SetHighPoint(0, 0, high_z);
+
+////        vtkLookupTable *pColorTable=vtkLookupTable::New();
+//        //设置颜色表中的颜色
+////        pColorTable->SetNumberOfColors(200000);
+////        /*pColorTable->SetTableValue(0,1.0,0.0,0.0,1.0);*/
+////        double r,g,b;
+////        for(int i = 0;i <200000;i++)
+////        {
+////           r= vtkMath::Random(0,255);
+////           g= vtkMath::Random(0,255);
+////           b= vtkMath::Random(0,255);
+////           pColorTable->SetTableValue(i,r,g,b,1.0);
+////        }
+////        pColorTable->Build();
+
+//        vtkPolyDataMapper *dataMapper = vtkPolyDataMapper::New();
+//        dataMapper->SetInputConnection(elevationFilter->GetOutputPort());
+////        dataMapper->SetScalarRange(0,7);
+////        dataMapper->SetLookupTable(pColorTable);
+
+//        vtkActor *actor = vtkActor::New();
+//        actor->SetMapper(dataMapper);
+
+//        vtkRenderer *renderer = vtkRenderer::New();
+//        renderer->AddActor(actor);
+
+//        renderer->SetBackground(255,255,255);//设置背景色
+////        renderer->SetGradientBackground(255);
+
+//        vtkRenderWindow *renderwind = vtkRenderWindow::New();
+//        renderwind->AddRenderer(renderer);
+
+//        vtkInteractorStyleTrackballCamera *style = vtkInteractorStyleTrackballCamera::New();
+
+//        vtkRenderWindowInteractor *renderwindIt = vtkRenderWindowInteractor::New();
+//        renderwindIt->SetRenderWindow(renderwind);
+//        renderwindIt->SetInteractorStyle(style);
+
+//        renderwind->Render();
+
+//        ui->qvtkWidget->SetRenderWindow(renderwind);
+
+
+//       int i;
+//       //定义立方体的顶点坐标
+//       static float x[8][3] = { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 0 },
+//       { 0, 0, 1 }, { 1, 0, 1 }, { 1, 1, 1 }, { 0, 1, 1 } };
+//       //定义单元，每4个顶点建立一个四边形单元，共计6个单元
+//       static vtkIdType pts[6][4] = { { 0, 1, 2, 3 }, { 4, 5, 6, 7 }, { 0, 1, 5, 4 },
+//       { 1, 2, 6, 5 }, { 2, 3, 7, 6 }, { 3, 0, 4, 7 } };
+//       //创建对象
+//       vtkSmartPointer<vtkPolyData> cube = vtkSmartPointer<vtkPolyData>::New();
+//       vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+//       vtkSmartPointer<vtkCellArray> polys = vtkSmartPointer<vtkCellArray>::New();
+//       //存储顶点
+//       for (i = 0; i < 8; i++)
+//           points->InsertPoint(i, x[i]);
+//       //设定单元
+//       for (i = 0; i < 6; i++)
+//           polys->InsertNextCell(4, pts[i]);
+
+//       //存储标量值
+//       vtkSmartPointer<vtkFloatArray> scalars = vtkSmartPointer<vtkFloatArray>::New();
+//       //设定每个顶点的标量值
+//       for (i = 0; i < 8; i++)
+//           scalars->InsertTuple1(i,  i*4);
+//       //创建多边形数据
+//       cube->SetPoints(points);
+//       //设定单元类型为多边形
+//       cube->SetPolys(polys);
+//       //设定每个顶点的标量值
+//       cube->GetPointData()->SetScalars(scalars);
+//       //定义颜色映射表
+//       vtkSmartPointer<vtkLookupTable> pColorTable = vtkSmartPointer<vtkLookupTable>::New();
+//       //设置颜色表中的颜色
+//       pColorTable->SetNumberOfColors(256);
+//       pColorTable->SetHueRange(0.67, 0.0);        //色调范围从红色到蓝色
+//       pColorTable->Build();
+//       //数据映射
+//       vtkSmartPointer<vtkPolyDataMapper> cubeMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+//       cubeMapper->SetInputData(cube);
+//       cubeMapper->SetScalarRange(0, 7);
+//       cubeMapper->SetLookupTable(pColorTable);
+//       vtkSmartPointer<vtkActor> cubeActor = vtkSmartPointer<vtkActor>::New();
+//       cubeActor->SetMapper(cubeMapper);
+
+//       vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+//       vtkSmartPointer<vtkRenderWindow> renWin = vtkSmartPointer<vtkRenderWindow>::New();
+//       renWin->AddRenderer(renderer);
+//       vtkSmartPointer<vtkRenderWindowInteractor> iren = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+//       iren->SetRenderWindow(renWin);
+//       renderer->AddActor(cubeActor);
+//       renderer->SetBackground(1, 1, 1);
+
+//       vtkRenderWindow *renderwind = vtkRenderWindow::New();
+//       renderwind->AddRenderer(renderer);
+
+//       vtkInteractorStyleTrackballCamera *style = vtkInteractorStyleTrackballCamera::New();
+
+//       vtkRenderWindowInteractor *renderwindIt = vtkRenderWindowInteractor::New();
+//       renderwindIt->SetRenderWindow(renderwind);
+//       renderwindIt->SetInteractorStyle(style);
+//       renderwind->Render();
+//       renderwindIt->Start();
+//       ui->qvtkWidget->SetRenderWindow(renderwind);
+//       ui->qvtkWidget->SetRenderWindow(renderwind);
+//       renWin->SetSize(500, 500);
+//       renWin->Render();
+//       iren->Start();
+//    vtkPoints *points = vtkPoints::New();
+//       vtkCellArray *cells = vtkCellArray::New();
+
+
+////    ifstream fs(argv[1]);
+////       ifstream fs("simplePoints.txt");
+//       vtkIdType idtype;
+//       double x, y, z;
+//       double r, g, b;
+//       for(int i =0;i<200000;i++)
+//       {
+//           x=vtkMath::Random(0.0,5.0);
+//           y=vtkMath::Random(0.0,5.0);
+//           z=vtkMath::Random(0.0,5.0);
+//           //插入点坐标，此处可改为其它的xyz
+//           idtype = points->InsertNextPoint(x,y,z);
+//           cells->InsertNextCell(1, &idtype);
+//       }
+
+
+//       //渲染机制未知，需要同时设置点坐标与点坐标对应的verts
+//       //verts中的id必须与点坐标对应
+//           vtkPolyData *polyData = vtkPolyData::New();
+//           polyData->SetPoints(points);
+//           polyData->SetVerts(cells);
+
+//       //设置颜色对照表
+//       vtkSmartPointer<vtkLookupTable> pColorTable = vtkSmartPointer<vtkLookupTable>::New();
+////       pColorTable->SetNumberOfColors(255);
+////       pColorTable->SetHueRange(0.67, 0.0);        //色调范围从红色到蓝色
+////       pColorTable->Build();
+////       for(int i = 0;i<200000;i++)
+////       {
+////           r =vtkMath::Random(0.0,1.0);
+////           g =vtkMath::Random(0.0,1.0);
+////           b =vtkMath::Random(0.0,1.0);
+////           pColorTable->SetTableValue(idtype,r,g,b,1);
+
+////       }
+//       /*pColorTable->SetTableValue(0,1.0,0.0,0.0,1.0);*/
+////    pColorTable->Build();
+//       //下面为正常的可视化流程，可设置的点云颜色、大小等已注释
+//       vtkPolyDataMapper *mapper = vtkPolyDataMapper::New();
+//       mapper->SetInputData(polyData);
+//       mapper->SetScalarRange(0,7);
+//       mapper->SetLookupTable(pColorTable);
+
+//       vtkActor *actor = vtkActor::New();
+//       actor->SetMapper(mapper);
+//       //设置颜色与点大小
+
+//       actor->GetProperty()->SetColor(0.0,0.0,0.0);
+//       actor->GetProperty()->SetPointSize(2);
+//       vtkRenderer *renderer = vtkRenderer::New();
+//       renderer->AddActor(actor);
+//       // 设置背景颜色
+//       renderer->SetBackground(255, 255, 255);
+
+//       vtkRenderWindow *renderWindow = vtkRenderWindow::New();
+//       renderWindow->AddRenderer(renderer);
+
+//       vtkRenderWindowInteractor *iren = vtkRenderWindowInteractor::New();
+//       iren->SetRenderWindow(renderWindow);
+
+//       vtkInteractorStyleTrackballCamera *style = vtkInteractorStyleTrackballCamera::New();
+//       iren->SetInteractorStyle(style);
+
+//       iren->Initialize();
+////       iren->Start();
+//       ui->qvtkWidget->SetRenderWindow(renderWindow);
+//       points->Delete();
+//       polyData->Delete();
+//       mapper->Delete();
+//       actor->Delete();
+//       renderer->Delete();
+//       renderWindow->Delete();
+//       iren->Delete();
+//       style->Delete();

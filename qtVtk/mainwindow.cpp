@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <vector>
+#include <string>
+#include<iostream>
+#include<time.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,13 +17,14 @@ MainWindow::MainWindow(QWidget *parent) :
     "QPushButton:pressed{background-color:rgb(85, 170, 255);\
     border-style: inset; }";
 
-//    ui->label_point_num->setStyleSheet("background-color:gray");
-//    ui->label_point_size->setStyleSheet("background-color:gray");
+    //ui->label_point_num->setStyleSheet("background-color:gray");
+    //ui->label_point_size->setStyleSheet("background-color:gray");
     ui->lineEdit_point_num ->setStyleSheet("border-radius: 10px;  border: 2px groove gray");
     ui->lineEdit_line_size ->setStyleSheet("border-radius: 10px;  border: 2px groove gray");
     ui->lineEdit_R->setStyleSheet("border-radius: 10px;  border: 2px groove gray");
     ui->lineEdit_G->setStyleSheet("border-radius: 10px;  border: 2px groove gray");
     ui->lineEdit_B->setStyleSheet("border-radius: 10px;  border: 2px groove gray");
+    ui->label_runTime_display->setStyleSheet("border-radius: 10px;  border: 2px groove gray");
     ui->pushButton_gen->setStyleSheet(button_style);
     ui->pushButton_end->setStyleSheet(button_style);
 }
@@ -32,6 +36,10 @@ MainWindow::~MainWindow()
 
 void MainWindow::Vtk_RGB_Point()
 {
+    clock_t start,finish;
+    double totaltime;
+    start=clock();
+    ui->qvtkWidget->setSizeIncrement(ui->centralWidget->sizeIncrement().height(),ui->centralWidget->sizeIncrement().width());
     vtkSmartPointer<vtkRenderer> Renderer = vtkSmartPointer<vtkRenderer>::New();
     std::vector<MainWindow::PointRGB> pointrgb;
     vtkSmartPointer<vtkActor> anActor = vtkSmartPointer<vtkActor>::New();
@@ -41,7 +49,6 @@ void MainWindow::Vtk_RGB_Point()
     vtkSmartPointer<vtkFloatArray>pointsScalars = vtkSmartPointer<vtkFloatArray>::New();
     vtkSmartPointer<vtkUnstructuredGrid> aGrid = vtkSmartPointer<vtkUnstructuredGrid>::New();
     vtkSmartPointer<vtkDataSetMapper> aMapper = vtkSmartPointer<vtkDataSetMapper>::New();
-    //vtkSmartPointer<vtkRenderer> newRenderer = vtkSmartPointer<vtkRenderer>::New();
 
     double x = 0, y = 0, z = 0;
     double r = 0, g = 0, b = 0;
@@ -71,16 +78,15 @@ void MainWindow::Vtk_RGB_Point()
     {
         points->InsertPoint(i, pointrgb[i].x, pointrgb[i].y, pointrgb[i].z);
         lut->SetTableValue(i, pointrgb[i].r / 255.0, pointrgb[i].g / 255.0, pointrgb[i].b / 255.0, 1);
-        //lut->SetTableValue(i, 255.0 / 255.0, 255.0 / 255.0, 255.0 / 255.0, 1);
     } //拓扑数据
 
-    polyVertex->GetPointIds()->SetNumberOfIds(number);//必须设置Id个数，否则可以编译，不能运行
+    polyVertex->GetPointIds()->SetNumberOfIds(number);//polyVertex,用于多点绘制，必须设置Id个数，否则可以编译，不能运行
 
-    pointsScalars->SetNumberOfTuples(number);//此行可有可无
+//    pointsScalars->SetNumberOfTuples(number);//此行可有可无
     for (int i = 0; i < number; i++)
     {
         polyVertex->GetPointIds()->SetId(i, i);//第一个参数是几何point的ID号，第2个参数是拓扑中的Id号
-        pointsScalars->InsertValue(i, i);//第1个参数是points点的Id，第2个参数是该点的属性值
+        pointsScalars->InsertValue(i,i);//第1个参数是points点的Id，第2个参数是该点的属性值
     }
     aGrid->Allocate(1, 1);
     aGrid->SetPoints(points);
@@ -108,11 +114,22 @@ void MainWindow::Vtk_RGB_Point()
     //leftRenderer->AddActor(sphereActor);
     //newRenderer->SetBackground(255, 255, 255);
     Renderer->AddActor(anActor);
-    Renderer->ResetCamera();
-    Renderer->DrawOn();
-    ui->qvtkWidget->GetRenderWindow()->Render();
-    ui->qvtkWidget->GetRenderWindow()->AddRenderer(Renderer);
+//    Renderer->ResetCamera();
+//    Renderer->DrawOn();
+//    ui->qvtkWidget->GetRenderWindow()->Render();
+    vtkRenderWindow *renderWindow = vtkRenderWindow::New();
+    renderWindow->AddRenderer(Renderer);
+    ui->qvtkWidget->SetRenderWindow(renderWindow);
+//    ui->qvtkWidget->GetRenderWindow()->AddRenderer(Renderer);
     ui->qvtkWidget->update();
+
+    finish=clock();
+    totaltime=(double)(finish-start)/CLOCKS_PER_SEC;
+
+    std::string run_time = std::to_string(totaltime)+"sec";
+    QString qstring = QString(QString::fromLocal8Bit(run_time.c_str()));
+    ui->label_runTime_display->setText(qstring);
+
 }
 
 void MainWindow::on_pushButton_gen_clicked()
@@ -124,5 +141,10 @@ void MainWindow::on_pushButton_end_clicked()
 {
     QApplication::exit();
 }
+
+
+
+
+
 
 

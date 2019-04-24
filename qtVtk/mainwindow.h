@@ -66,10 +66,12 @@ public:
     void Vtk_RGB_Point();
 
 
+
 private slots:
     void on_pushButton_gen_clicked();
 
     void on_pushButton_end_clicked();
+
 
 private:
     Ui::MainWindow *ui;
