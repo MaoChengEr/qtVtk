@@ -20,7 +20,7 @@ HEADERS  += mainwindow.h
 FORMS    += mainwindow.ui
 
 INCLUDEPATH += "C:\Program Files\VTK\include\vtk-7.1"
-INCLUDEPATH += "C:\Program Files\VTK\include\vtk-7.1\vtkhdf5"
+#INCLUDEPATH += "C:\Program Files\VTK\include\vtk-7.1\vtkhdf5"
 
 win32:LIBS += $$quote(C:\Program Files\VTK\lib\vtkalglib-7.1.lib)
 win32:LIBS += $$quote(C:\Program Files\VTK\lib\vtkChartsCore-7.1.lib)
